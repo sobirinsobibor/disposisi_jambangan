@@ -1,0 +1,8 @@
+roleid pegawai:
+    1.admin
+    2.camat
+    3.sekmat
+    4.operator
+    5.KASI&KABAG
+;
+
