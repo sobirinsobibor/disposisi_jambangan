@@ -48,7 +48,7 @@
                                                             @elseif ($d->sm->role == 2)
                                                                 Dalam Pengecekan Sekretaris Camat
                                                             @elseif ($d->sm->role == 3)
-                                                                Menunggu disposisi Operator
+                                                                Menunggu tindakan Operator
                                                             @elseif ($d->sm->role == 4)
                                                                 Surat Masuk tidak disetujui Camat
                                                             @elseif ($d->sm->role == 5)
@@ -85,6 +85,12 @@
                                                                         </div>
                                                                         <div class="col-8">
                                                                             {{ $d->sm->nosurat }}
+                                                                        </div>
+                                                                        <div class="col-4">
+                                                                            No. Registrasi
+                                                                        </div>
+                                                                        <div class="col-8">
+                                                                            {{ $s->noregis }}
                                                                         </div>
                                                                         <div class="col-4">
                                                                             Instansi Pengirim
@@ -152,7 +158,7 @@
                                                                         </div>
                                                                         <div class="col-8">
                                                                             @if ($d->sm->tglcamat)
-                                                                                {{ \Carbon\Carbon::parse($d->sm->tglsurat)->translatedFormat('l, d F Y') }}
+                                                                                {{ \Carbon\Carbon::parse($d->sm->tgcamat)->translatedFormat('l, d F Y') }}
                                                                             @else
                                                                                 -
                                                                             @endif
@@ -202,8 +208,8 @@
                                                         </div>
                                                     </div>
                                                     <td style="text-align: center;">
-                                                        <a href="{{ asset('storage/' . $d->sm->pdf) }}"><i
-                                                                class="bi bi-download fs-4"></i></a>
+                                                        <a href="{{ asset('storage/' . $d->sm->pdf) }}" target="_blank"><i
+                                                            class="bi bi-file-earmark-medical fs-4"></i></a>
                                                     </td>
                                                 </tr>
                                             @endif
@@ -222,7 +228,7 @@
         <footer>
             <div class="footer clearfix mb-0 text-muted">
                 <div class="float-start">
-                    <p>2023 &copy; Sistem Informasi Aplikasi Perkantoran</p>
+                    <p>2023 &copy; Sistem Aplikasi Administrasi Perkantoran</p>
                 </div>
             </div>
         </footer>

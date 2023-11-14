@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | SIAP</title>
+    <title>Dashboard | SIAAP</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -101,14 +101,30 @@
                             <li class="sidebar-item  has-sub">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-envelope"></i>
-                                    <span>Validasi Persuratan</span>
+                                    <span>Validasi Surat</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    @php
+                                        $sm = App\Models\SuratMasuk::where('role', 1)->get();
+                                        $sk = App\Models\SuratKeluar::where('role', 4)->get();
+                                        $count = $sm->count() + $sk->count();
+                                    @endphp
+                                    @if ($count)
+                                        <i style="color: #cc0f0f" class="bi bi-info-circle-fill"></i>
+                                    @endif
                                 </a>
                                 <ul class="submenu ">
                                     <li class="submenu-item ">
-                                        <a href="/validasisuratmasuk">Surat Masuk</a>
+                                        <a href="/validasisuratmasuk">Surat Masuk &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="badge"
+                                                style="color: white; background-color: #25396f">{{ $sm->count() }}
+                                            </span>
+                                        </a>
                                     </li>
                                     <li class="submenu-item ">
-                                        <a href="/validasisuratkeluar">Surat Keluar</a>
+                                        <a href="/validasisuratkeluar">Surat Keluar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="badge"
+                                                style="color: white; background-color: #25396f">{{ $sk->count() }}
+                                            </span>
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
@@ -133,14 +149,30 @@
                             <li class="sidebar-item  has-sub">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-envelope"></i>
-                                    <span>Validasi Persuratan</span>
+                                    <span>Validasi Surat</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    @php
+                                        $sm = App\Models\SuratMasuk::where('role', 2)->get();
+                                        $sk = App\Models\SuratKeluar::where('role', 1)->get();
+                                        $count = $sm->count() + $sk->count();
+                                    @endphp
+                                    @if ($count)
+                                        <i style="color: #cc0f0f" class="bi bi-info-circle-fill"></i>
+                                    @endif
                                 </a>
                                 <ul class="submenu ">
                                     <li class="submenu-item ">
-                                        <a href="/suratmasuksekcam">Surat Masuk</a>
+                                        <a href="/suratmasuksekcam">Surat Masuk &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="badge"
+                                                style="color: white; background-color: #25396f">{{ $sm->count() }}
+                                            </span>
+                                        </a>
                                     </li>
                                     <li class="submenu-item ">
-                                        <a href="/suratkeluarsekcam">Surat Keluar</a>
+                                        <a href="/suratkeluarsekcam">Surat Keluar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="badge"
+                                                style="color: white; background-color: #25396f">{{ $sk->count() }}
+                                            </span>
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
@@ -157,14 +189,30 @@
                             <li class="sidebar-item  has-sub">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-envelope"></i>
-                                    <span>Persuratan</span>
+                                    <span>Persuratan</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    @php
+                                        $sm = App\Models\SuratMasuk::where('role', 3)->get();
+                                        $sk = App\Models\SuratKeluar::where('role', 2)->get();
+                                        $count = $sm->count() + $sk->count();
+                                    @endphp
+                                    @if ($count)
+                                        <i style="color: #cc0f0f" class="bi bi-info-circle-fill"></i>
+                                    @endif
                                 </a>
                                 <ul class="submenu ">
                                     <li class="submenu-item ">
-                                        <a href="/datasuratmasuk">Data Surat Masuk</a>
+                                        <a href="/datasuratmasuk">Surat Masuk &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span
+                                                class="badge" style="color: white; background-color: #25396f">{{ $sm->count() }}
+                                            </span>
+                                        </a>
                                     </li>
                                     <li class="submenu-item ">
-                                        <a href="/datasuratkeluar">Data Surat Keluar</a>
+                                        <a href="/datasuratkeluar">Surat Keluar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span
+                                                class="badge" style="color: white; background-color: #25396f">{{ $sk->count() }}
+                                            </span>
+                                        </a>
                                     </li>
                                 </ul>
                             </li>

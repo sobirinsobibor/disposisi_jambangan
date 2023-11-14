@@ -33,7 +33,7 @@
                                         @csrf
                                         <div class="form-body">
                                             <div class="row">
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-9">
                                                     <h6>NO SURAT</h6>
                                                     <div class="form-group position-relative has-icon-left">
                                                         <input type="text" name="nosurat"
@@ -45,7 +45,37 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                @php
+                                                    $tahunIni = now()->year;
+                                                    $noregis = App\Models\SuratMasuk::whereYear('created_at', '=', $tahunIni)->get();
+                                                    $countFormatted = str_pad($noregis->count()+1, 3, '0', STR_PAD_LEFT);
+                                                @endphp
                                                 <div class="col-3">
+                                                    <h6>NO. REGISTRASI</h6>
+                                                    <div class="form-group position-relative has-icon-left">
+                                                        <input type="text" name="noregis"
+                                                            class="form-control form-control-lg "
+                                                            value="{{ $countFormatted }}" readonly>
+                                                        <div class="form-control-icon">
+                                                            <i class="bi bi-collection"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6 mt-3">
+                                                    <h6>INSTANSI PENGIRIM</h6>
+                                                    <div class="form-group position-relative has-icon-left">
+                                                        <input type="text" name="instansi"
+                                                            class="form-control form-control-lg"
+                                                            placeholder="Masukkan Nama Instansi Pengirim"
+                                                            value="{{ old('instansi') }}" required>
+                                                        <div class="form-control-icon">
+                                                            <i class="bi bi-house-door"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3 mt-3">
                                                     <h6>TGL. SURAT</h6>
                                                     <div class="form-group position-relative has-icon-left">
                                                         <input type="date" name="tglsurat"
@@ -56,7 +86,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-3 mt-3">
                                                     <h6>TGL. DITERIMA</h6>
                                                     <div class="form-group position-relative has-icon-left">
                                                         <input type="date" name="tglditerima"
@@ -64,18 +94,6 @@
                                                             value="{{ old('tglditerima') }}" required>
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-calendar2-check"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 mt-3">
-                                                    <h6>INSTANSI PENGIRIM</h6>
-                                                    <div class="form-group position-relative has-icon-left">
-                                                        <input type="text" name="instansi"
-                                                            class="form-control form-control-lg"
-                                                            placeholder="Masukkan Nama Instansi Pengirim"
-                                                            value="{{ old('instansi') }}" required>
-                                                        <div class="form-control-icon">
-                                                            <i class="bi bi-house-door"></i>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -100,8 +118,8 @@
                                                     <h6>LAMPIRAN</h6>
                                                     <div class="input-group mb-3">
                                                         <input type="number" name="lampiran"
-                                                            class="form-control form-control-lg"
-                                                            placeholder="--Lampiran--" aria-label="Recipient's username"
+                                                            class="form-control form-control-lg" placeholder="--Lampiran--"
+                                                            aria-label="Recipient's username"
                                                             aria-describedby="basic-addon2" value="{{ old('lampiran') }}"
                                                             required>
                                                         <span class="input-group-text" id="basic-addon2">Lampiran</span>
@@ -128,19 +146,18 @@
                                                             value="{{ old('sifat') }}" id="basicSelect" required>
                                                             <option selected="selected" disabled="disabled">--Sifat--
                                                             </option>
-                                                            <option value="Segera">Segera</option>
-                                                            <option value="Sangat Segera">Sangat Segera</option>
-                                                            <option value="Kilat">Kilat</option>
+                                                            <option value="Biasa">Biasa</option>
+                                                            <option value="Penting">Penting</option>
+                                                            <option value="Sangat Penting">Sangat Penting</option>
+                                                            <option value="Rahasia">Rahasia</option>
                                                         </select>
                                                     </fieldset>
                                                 </div>
 
                                                 <h4 class="card-title mt-3">Unggah File Surat</h4>
                                                 <small>Silahkan unggah file surat dalam satu file</small>
-                                                <input type="file" name="pdf" class="form-control form-control-lg mb-3">
-
-                                                {{-- <input type="file" name="image" class="imgbb-filepond mt-2" required> --}}
-
+                                                <input type="file" name="pdf"
+                                                    class="form-control form-control-lg mb-3">
                                                 <div class="col-sm-12 d-flex justify-content-end">
                                                     <button type="submit"
                                                         class="btn btn-primary me-1 mb-1">Tambahkan</button>
@@ -162,7 +179,7 @@
         <footer>
             <div class="footer clearfix mb-0 text-muted">
                 <div class="float-start">
-                    <p>2023 &copy; Sistem Informasi Aplikasi Perkantoran</p>
+                    <p>2023 &copy; Sistem Aplikasi Administrasi Perkantoran</p>
                 </div>
             </div>
         </footer>

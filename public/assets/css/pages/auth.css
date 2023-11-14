@@ -7,11 +7,12 @@ body {
 }
 #auth #auth-right {
     height: 100%;
-    background: url(../../images/bg/4853433.jpg),
-        linear-gradient(90deg, #2d499d, #3f5491);
+    /* background-image: url(../../images/bg/purwo.jpeg); */
+    /* background: url(../../images/bg/purwo.jpeg) */
+        /* linear-gradient(30deg, #2d499d, #3f5491); */
 }
 #auth #auth-left {
-    padding: 5rem 8rem;
+    padding: 2.1rem 8rem;
 }
 #auth #auth-left .auth-title {
     font-size: 4rem;
@@ -23,7 +24,7 @@ body {
     color: #a8aebb;
 }
 #auth #auth-left .auth-logo {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 #auth #auth-left .auth-logo img {
     height: 7rem;
@@ -31,5 +32,7 @@ body {
 @media screen and (max-width: 767px) {
     #auth #auth-left {
         padding: 5rem;
+        font-size: 1.2rem 7%;
+        padding: 2.1rem 8rem 10%;
     }
 }

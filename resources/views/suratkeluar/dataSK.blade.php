@@ -52,20 +52,23 @@
                                                     @if ($s->role == 1)
                                                         Sedang diproses Sekretaris Camat
                                                     @elseif ($s->role == 2)
-                                                        Menunggu disposisi Operator
+                                                        Menunggu tindakan Operator
                                                     @elseif ($s->role == 3)
                                                         Surat Keluar tidak disetujui oleh Sekretaris Camat
                                                     @elseif ($s->role == 4)
                                                         Sedang diproses Camat
                                                     @elseif ($s->role == 5)
-                                                        Surat Keluar disetuji oleh Camat
+                                                        Surat Keluar disetujui oleh Camat
                                                     @elseif ($s->role == 6)
-                                                        Surat Keluar tidak disetuji oleh Camat
+                                                        Surat Keluar tidak disetujui oleh Camat
+                                                    @elseif ($s->role == 7)
+                                                        Surat Keluar didisposisikan Camat ke Operator
                                                     @endif
                                                 </td>
                                                 <td style="text-align: center;">
                                                     <button type="button" class="btn fs-3" style="border: none"
-                                                        data-bs-toggle="modal" data-bs-target="#detailsurat{{ $s->id }}">
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#detailsurat{{ $s->id }}">
                                                         <i class="bi bi-eye"></i>
                                                     </button>
                                                 </td>
@@ -239,25 +242,77 @@
                                                     @if ($s->role == 2)
                                                         <form action="/disposisisuratkeluar" method="POST">
                                                             @csrf
-                                                            <input type="hidden" name="id" value="{{ $s->id }}">
+                                                            <input type="hidden" name="id"
+                                                                value="{{ $s->id }}">
                                                             @if ($s->validasisekcam == 1)
                                                                 <button type="submit" class="btn btn-primary btn-sm">
-                                                                    Disposisikan ke Camat
+                                                                    Teruskan ke Camat
                                                                 </button>
                                                             @else
                                                                 <button type="submit" class="btn btn-primary btn-sm">
-                                                                    Disposisikan ke {{ $s->user->jabatan }}
+                                                                    Teruskan ke {{ $s->user->jabatan }}
                                                                 </button>
                                                             @endif
                                                         </form>
+                                                    @elseif ($s->role == 7)
+                                                        <button type="button" class="btn btn-outline-primary"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#submit{{ $s->id }}">
+                                                            Tindakan
+                                                        </button>
                                                     @else
                                                         -
                                                     @endif
                                                 </td>
+                                                <div class="modal fade" id="submit{{ $s->id }}" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalScrollableTitle"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+                                                        role="document">
+                                                        <div class="modal-content" style="height: 250px;">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalScrollableTitle">
+                                                                    No Registrasi Surat Keluar</h5>
+                                                                <button type="button" class="close"
+                                                                    data-bs-dismiss="modal" aria-label="Close">
+                                                                    <i data-feather="x"></i>
+                                                                </button>
+                                                            </div>
+                                                            @php
+                                                                $tahunIni = now()->year;
+                                                                $noregis = App\Models\SuratKeluar::whereYear('created_at', '=', $tahunIni)->where('validasicamat', 1)->get();
+                                                                $count = str_pad($noregis->count(), 3, '0', STR_PAD_LEFT);
+                                                                $nosurat = $s->nojenis."/".$count."/".$s->noinstansi."/".$s->notahun;
+                                                            @endphp
+                                                            <form action="/submitnoregis" method="POST">
+                                                                @csrf
+                                                                <input type="hidden" name="id"
+                                                                    value="{{ $s->id }}">
+                                                                <div class="modal-body">
+                                                                    <div class="d-flex align-items-ceter">
+                                                                        <input type="text" name="nosurat"
+                                                                            value="{{ $nosurat }}" readonly class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-light-secondary"
+                                                                        data-bs-dismiss="modal">
+                                                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">Tutup</span>
+                                                                    </button>
+                                                                    <button type="submit" class="btn btn-primary ml-1">
+                                                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">Kirim</span>
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
                                                 <td style="text-align: center;">
-                                                    <a href="{{ asset('storage/' . $s->pdf) }}"><i
-                                                            class="bi bi-download fs-4"></i></a>
+                                                    <a href="{{ asset('storage/' . $s->pdf) }}" target="_blank"><i
+                                                            class="bi bi-file-earmark-medical fs-4"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -275,7 +330,7 @@
         <footer>
             <div class="footer clearfix mb-0 text-muted">
                 <div class="float-start">
-                    <p>2023 &copy; Sistem Informasi Aplikasi Perkantoran</p>
+                    <p>2023 &copy; Sistem Aplikasi Administrasi Perkantoran</p>
                 </div>
             </div>
         </footer>

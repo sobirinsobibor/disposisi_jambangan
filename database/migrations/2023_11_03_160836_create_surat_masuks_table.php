@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('surat_masuks', function (Blueprint $table) {
             $table->id();
             $table->string('nosurat');
+            $table->string('noregis');
             $table->integer('role')->default(1);
             $table->string('slug')->unique();
             $table->string('pdf');

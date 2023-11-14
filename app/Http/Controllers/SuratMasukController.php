@@ -16,17 +16,15 @@ class SuratMasukController extends Controller
 
     public function index()
     {
-        $dsm = DetailSM::where('kasi', auth()->user()->id)->get();
         return view('suratmasuk.index', [
-            "dsm" => $dsm
+            "dsm" => DetailSM::where('kasi', auth()->user()->id)->latest()->get()
         ]);
     }
 
     public function list()
     {
-        $suratmasuk = SuratMasuk::all();
         return view('suratmasuk.dataSM', [
-            "sm" => $suratmasuk
+            "sm" => SuratMasuk::orderBy('created_at', 'desc')->get()
         ]);
     }
 
@@ -38,28 +36,29 @@ class SuratMasukController extends Controller
     public function SMcamat()
     {
         return view('suratmasuk.SMcamat', [
-            "sm" => SuratMasuk::where('role', 1)->get(),
-            "pegawai" => User::where('roleid', 5)->get()
+            "sm" => SuratMasuk::where('role', 1)->latest()->get(),
+            "pegawai" => User::where('roleid', 5)->latest()->get()
         ]);
     }
 
     public function SMsekcam()
     {
         return view('suratmasuk.SMsekcam', [
-            "sm" => SuratMasuk::where('role', 2)->get()
+            "sm" => SuratMasuk::where('role', 2)->latest()->get()
         ]);
     }
 
     public function listSMcamat()
     {
         return view('suratmasuk.listSMcamat', [
-            "sm" => SuratMasuk::all()
+            "sm" => SuratMasuk::orderBy('created_at', 'desc')->get()
         ]);
     }
 
-    public function listSMsekcam(){
+    public function listSMsekcam()
+    {
         return view('suratmasuk.listSMsekcam', [
-            "sm" => SuratMasuk::where('role', '!=', 1)->get()
+            "sm" => SuratMasuk::where('role', '!=', 1)->latest()->get()
         ]);
     }
 
@@ -81,6 +80,7 @@ class SuratMasukController extends Controller
             $validatedData['pdf'] = $request->file('pdf')->store('suratmasuk');
         }
 
+        $validatedData["noregis"] = $request->noregis;
         $validatedData['slug'] = Str::random(30);
         SuratMasuk::create($validatedData);
         return back()->with('success', "Surat Masuk berhasil ditambahkan");

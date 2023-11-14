@@ -17,14 +17,14 @@ class SuratKeluarController extends Controller
     public function index()
     {
         return view('suratkeluar.index', [
-            "sk" => SuratKeluar::all()
+            "sk" => SuratKeluar::orderBy('created_at', 'desc')->get()
         ]);
     }
 
     public function list()
     {
         return view('suratkeluar.dataSK', [
-            "sk" => SuratKeluar::where('role', '!=', 1)->get()
+            "sk" => SuratKeluar::where('role', '!=', 1)->latest()->get()
         ]);
     }
 
@@ -36,35 +36,37 @@ class SuratKeluarController extends Controller
     public function SKcamat()
     {
         return view('suratkeluar.SKcamat', [
-            "sk" => SuratKeluar::where('role', 4)->get()
+            "sk" => SuratKeluar::where('role', 4)->latest()->get()
         ]);
     }
 
     public function SKsekcam()
     {
         return view('suratkeluar.SKsekcam', [
-            "sk" => SuratKeluar::where('role', 1)->get()
+            "sk" => SuratKeluar::where('role', 1)->latest()->get()
         ]);
     }
 
     public function listSKcamat()
     {
         return view('suratkeluar.listSKcamat', [
-            "sk" => SuratKeluar::where('role', 5)->orwhere('role', 6)->get()
+            "sk" => SuratKeluar::where('role', 4)->orwhere('role', 5)->orwhere('role', 6)->orwhere('role', 7)->latest()->get()
         ]);
     }
 
     public function listSKsekcam()
     {
         return view('suratkeluar.listSKsekcam', [
-            "sk" => SuratKeluar::all()
+            "sk" => SuratKeluar::orderBy('created_at', 'desc')->get()
         ]);
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            "nosurat" => "required",
+            "nojenis" => "required",
+            "noinstansi" => "required",
+            "notahun" => "required",
             "pdf" => "mimes:pdf|file|max:10240",
             "tglsurat" => "required",
             "perihal" => "required",
@@ -76,6 +78,7 @@ class SuratKeluarController extends Controller
             $validatedData['pdf'] = $request->file('pdf')->store('suratkeluar');
         }
 
+        $validatedData["nosurat"] = $request->nojenis."/".$request->noinstansi."/".$request->notahun;
         $validatedData["kasi"] = auth()->user()->id;
         $validatedData['slug'] = Str::random(30);
         SuratKeluar::create($validatedData);
@@ -113,13 +116,21 @@ class SuratKeluarController extends Controller
         $validatedData["tglcamat"] = now();
         $validatedData["catcamat"] = $request->catcamat;
         if($request->validasicamat == 1){
-            $validatedData["role"] = 5;
+            $validatedData["role"] = 7;
         }else{
             $validatedData["role"] = 6;
         }
 
         $suratkeluar->update($validatedData);
         return back()->with('success', "Surat Keluar berhasil diajukan");
+    }
+
+    public function submitnoregis(Request $request){
+        $suratkeluar = SuratKeluar::where('id', $request->id)->first();
+        $validatedData["nosurat"] = $request->nosurat;
+        $validatedData["role"] = 5;
+        $suratkeluar->update($validatedData);
+        return back()->with('success', "No Surat Keluar berhasil diperbarui");
     }
 }
 

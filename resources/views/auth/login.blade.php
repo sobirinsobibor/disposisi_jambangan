@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIAP</title>
+    <title>SIAAP</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
     <link rel="stylesheet" href="assets/vendors/bootstrap-icons/bootstrap-icons.css">
@@ -16,12 +16,12 @@
 <body>
     <div id="auth">
         <div class="row h-100">
-            <div class="col-lg-5 col-12">
+            <div class="col-lg-6 col-12">
                 <div id="auth-left">
                     <div class="auth-logo">
                         <div class="row">
                             <div class="col-4">
-                                <a href="index.html"><img src="assets/images/logo/logo.png" alt="Logo"></a>
+                                <a href="/"><img src="assets/images/logo/logo.png" alt="Logo"></a>
                             </div>
                             <div class="col-8 mt-2">
                                 <small style="font-size: 35px; color: black; font-weight: 800;">Kecamatan</small><br>
@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <small style="font-size: 24px; color: #25396f; font-weight: 900">Masuk</small>
-                    <p class="auth-subtitle mb-2" style="font-size: 15px">Sistem Informasi Aplikasi Perkantoran</p>
+                    <p class="auth-subtitle mb-2" style="font-size: 15px">Sistem Aplikasi Administrasi Perkantoran</p>
 
                     @if (session()->has('loginError'))
                         <div class="alert alert-danger alert-dismissible fade show col-md-12" role="alert">
@@ -59,9 +59,11 @@
                     </form>
                 </div>
             </div>
-            <div class="col-lg-7 d-none d-lg-block">
+            <div class="col-lg-6 d-none d-lg-block">
                 <div id="auth-right">
-
+                    <div class="gambar">
+                        <img class="img-fluid" style="height: 37.2rem" src="assets/images/bg/purwo.jpeg" alt="">
+                    </div>
                 </div>
             </div>
         </div>

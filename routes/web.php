@@ -51,3 +51,4 @@ Route::post('/tambahsuratkeluar', [SuratKeluarController::class, 'store'])->midd
 Route::post('/validasiSKsekcam', [SuratKeluarController::class, 'validasiSKsekcam'])->middleware('sekcam');
 Route::post('/disposisisuratkeluar', [SuratKeluarController::class, 'disposisiSK'])->middleware('operator');
 Route::post('/validasiSKcamat', [SuratKeluarController::class, 'validasiSKcamat'])->middleware('camat');
+Route::post('/submitnoregis', [SuratKeluarController::class, 'submitnoregis'])->middleware('operator');

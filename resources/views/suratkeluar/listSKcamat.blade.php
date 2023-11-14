@@ -50,15 +50,17 @@
                                                     @if ($s->role == 1)
                                                         Sedang diproses Sekretaris Camat
                                                     @elseif ($s->role == 2)
-                                                        Menunggu disposisi Operator
+                                                        Menunggu tindakan Operator
                                                     @elseif ($s->role == 3)
-                                                        Surat Keluar tidak disetujui oleh Sekretaris Camat
+                                                        Surat Keluar non Acc oleh Sekretaris Camat
                                                     @elseif ($s->role == 4)
                                                         Sedang diproses Camat
                                                     @elseif ($s->role == 5)
-                                                        Surat Keluar disetuji oleh Camat
+                                                        Surat Keluar disetujui oleh Camat
                                                     @elseif ($s->role == 6)
-                                                        Surat Keluar tidak disetuji oleh Camat
+                                                        Surat Keluar tidak disetujui oleh Camat
+                                                    @elseif ($s->role == 7)
+                                                        Surat Keluar didisposisikan Camat ke Operator
                                                     @endif
                                                 </td>
                                                 <td style="text-align: center;">
@@ -153,10 +155,10 @@
                                                                                         Tidak disetujui oleh Camat
                                                                                     @endif
                                                                                 @else
-                                                                                    Disetujui oleh Sekretaris Camat
+                                                                                    Acc oleh Sekretaris Camat
                                                                                 @endif
                                                                             @else
-                                                                                Tidak disetujui oleh Sekretaris Camat
+                                                                                non Acc oleh Sekretaris Camat
                                                                             @endif
                                                                         @else
                                                                             Menunggu persetujuan Sekretaris Camat
@@ -235,8 +237,8 @@
                                                 </div>
 
                                                 <td style="text-align: center;">
-                                                    <a href="{{ asset('storage/' . $s->pdf) }}"><i
-                                                            class="bi bi-download fs-4"></i></a>
+                                                    <a href="{{ asset('storage/' . $s->pdf) }}" target="_blank"><i
+                                                            class="bi bi-file-earmark-medical fs-4"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -254,7 +256,7 @@
         <footer>
             <div class="footer clearfix mb-0 text-muted">
                 <div class="float-start">
-                    <p>2023 &copy; Sistem Informasi Aplikasi Perkantoran</p>
+                    <p>2023 &copy; Sistem Aplikasi Administrasi Perkantoran</p>
                 </div>
             </div>
         </footer>

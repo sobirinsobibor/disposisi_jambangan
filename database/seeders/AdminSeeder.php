@@ -19,8 +19,8 @@ class AdminSeeder extends Seeder
         ]);
 
         User::create([
-            "name" => "Dian Rokhmawati Ikhtiyorini, S.STP.MM",
-            "nip" => "197809152009011112",
+            "name" => "Yudhistira Ardhi Nugraha, S.STP., MM",
+            "nip" => "198307312001121003",
             "password" => bcrypt("purwosari"),
             "roleid" => 2,
             "jabatan" => "Camat"
@@ -35,8 +35,8 @@ class AdminSeeder extends Seeder
         ]);
 
         User::create([
-            "name" => "Operator",
-            "nip" => "197809152009011114",
+            "name" => "Yatemo",
+            "nip" => "198501202014061001",
             "password" => bcrypt("purwosari"),
             "roleid" => 4,
             "jabatan" => "Operator"

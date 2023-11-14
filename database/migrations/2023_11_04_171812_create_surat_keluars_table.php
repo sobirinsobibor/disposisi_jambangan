@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('surat_keluars', function (Blueprint $table) {
             $table->id();
             $table->string('nosurat');
+            $table->string('nojenis');
+            $table->string('noinstansi');
+            $table->string('notahun');
+            $table->string('noregis')->nullable();
             $table->foreignId('kasi');
             $table->integer('role')->default(1);
             $table->string('slug')->unique();
