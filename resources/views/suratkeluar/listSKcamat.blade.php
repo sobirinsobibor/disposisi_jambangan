@@ -60,7 +60,7 @@
                                                     @elseif ($s->role == 6)
                                                         Surat Keluar tidak disetujui oleh Camat
                                                     @elseif ($s->role == 7)
-                                                        Surat Keluar didisposisikan Camat ke Operator
+                                                        Surat Keluar diteruskan Camat ke Operator untuk didisposisi
                                                     @endif
                                                 </td>
                                                 <td style="text-align: center;">
