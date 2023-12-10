@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('suratmasuk');
             $table->foreignId('kasi');
+            $table->integer('read')->default(0);
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="alert alert-light-success color-success"><i
-                                class="bi bi-star"> Selamat datang <span style="font-weight: 900">{{ ucwords(auth()->user()->name) }}</span> di Sistem Aplikasi Administrasi Perkantoran! Anda sudah login sebagai<span style="font-weight: 900"> {{ ucwords(auth()->user()->jabatan) }}</i>
+                                class="bi bi-star"> Selamat datang <span style="font-weight: 900">{{ ucwords(auth()->user()->name) }}</span> di Sistem Aplikasi Administrasi Perkantoran! Anda berhasil masuk sebagai<span style="font-weight: 900"> {{ ucwords(auth()->user()->jabatan) }}</i>
                             </div>
                         </div>
                     </div>

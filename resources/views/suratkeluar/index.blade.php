@@ -20,6 +20,14 @@
                                 Surat Keluar
                             </div>
                             <div class="card-body">
+                                @if (session()->has('success'))
+                                <div class="alert alert-success alert-dismissible show fade">
+                                    {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                                @endif
+
                                 <table class="table table-striped" id="table1">
                                     <thead>
                                         <tr>
@@ -40,19 +48,43 @@
                                                 <td>{{ $s->perihal }}</td>
                                                 <td>
                                                     @if ($s->role == 1)
-                                                        Sedang diproses Sekretaris Camat
+                                                        Sedang diproses Sekretaris Kecamatan
                                                     @elseif ($s->role == 2)
                                                         Menunggu tindakan Operator
                                                     @elseif ($s->role == 3)
-                                                        Surat Keluar tidak disetujui oleh Sekretaris Camat
+                                                        Surat Keluar Non Acc oleh Sekretaris Kecamatan
+                                                        @if($s->read == 1)
+                                                            <small>
+                                                                <a style="color: red" href="/sksudahdibaca/{{ $s->id }}">
+                                                                    (tandai sudah dibaca)
+                                                                </a>
+                                                            </small> 
+                                                        @endif
                                                     @elseif ($s->role == 4)
                                                         Sedang diproses Camat
                                                     @elseif ($s->role == 5)
                                                         Surat Keluar disetujui oleh Camat
+                                                        @if($s->read == 1 && $s->noregis !== null)
+                                                            <small>
+                                                                <a style="color: red" href="/sksudahdibaca/{{ $s->id }}">
+                                                                    (tandai sudah dibaca)
+                                                                </a>
+                                                            </small> 
+                                                        @endif
                                                     @elseif ($s->role == 6)
                                                         Surat Keluar tidak disetujui oleh Camat
+                                                        @if($s->read == 1)
+                                                        <small>
+                                                            <a style="color: red" href="/sksudahdibaca/{{ $s->id }}">
+                                                                (tandai sudah dibaca)
+                                                            </a>
+                                                        </small> 
+                                                    @endif
                                                     @elseif ($s->role == 7)
-                                                        Surat Keluar didisposisikan Camat ke Operator
+                                                        Surat Keluar diteruskan Camat ke Operator
+                                                        <small>
+                                                            <?php echo ($s->noregis === null) ? "(menunggu nomor registrasi)" : ""; ?>
+                                                        </small>
                                                     @endif
                                                 </td>
                                                 <td style="text-align: center;">
@@ -142,18 +174,18 @@
                                                                             @if ($s->validasisekcam == 1)
                                                                                 @if ($s->validasicamat)
                                                                                     @if ($s->validasicamat == 1)
-                                                                                        Disetujui oleh Camat
+                                                                                        Disetujui oleh Camat <?php echo ($s->noregis === null) ? "(menunggu nomor registrasi)" : ""; ?>
                                                                                     @else
                                                                                         Tidak disetujui oleh Camat
                                                                                     @endif
                                                                                 @else
-                                                                                    Acc oleh Sekretaris Camat
+                                                                                    Acc oleh Sekretaris Kecamatan
                                                                                 @endif
                                                                             @else
-                                                                                Tidak Acc oleh Sekretaris Camat
+                                                                                Non Acc oleh Sekretaris Kecamatan
                                                                             @endif
                                                                         @else
-                                                                            Menunggu persetujuan Sekretaris Camat
+                                                                            Menunggu persetujuan Sekretaris Kecamatan
                                                                         @endif
                                                                     </div>
 
@@ -169,7 +201,23 @@
                                                                     </div>
 
                                                                     <code class="mt-2" style="font-size: 17px">#Tindakan
-                                                                        Sekretaris Camat</code>
+                                                                        Sekretaris Kecamatan
+                                                                    </code>
+
+                                                                    <div class="col-4">
+                                                                        Hasil Sekretaris Kecamatan
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        @if ($s->validasisekcam)
+                                                                            @if ($s->validasisekcam == 1)
+                                                                                Acc oleh Sekretaris Kecamatan
+                                                                            @else
+                                                                                Non Acc oleh Sekretaris Kecamatan
+                                                                            @endif
+                                                                        @else
+                                                                            Menunggu persetujuan Sekretaris Kecamatan
+                                                                        @endif
+                                                                    </div>
 
                                                                     <div class="col-4">
                                                                         Tanggal Tindakan SekCam
@@ -182,7 +230,7 @@
                                                                         @endif
                                                                     </div>
                                                                     <div class="col-4">
-                                                                        Catatan Sekretaris Camat
+                                                                        Catatan Sekretaris Kecamatan
                                                                     </div>
                                                                     <div class="col-8">
                                                                         @if ($s->catsekcam)
@@ -193,7 +241,24 @@
                                                                     </div>
 
                                                                     <code class="mt-2" style="font-size: 17px">#Tindakan
-                                                                        Camat</code>
+                                                                        Camat
+                                                                    </code>
+
+                                                                    <div class="col-4">
+                                                                        Keputusan Camat
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        @if ($s->validasicamat)
+                                                                            @if ($s->validasicamat == 1)
+                                                                                Disetujui Oleh Camat 
+                                                                            @else
+                                                                                Tidak Disetujui oleh Camat
+                                                                            @endif
+                                                                        @else
+                                                                            Menunggu Keputusan Camat
+                                                                        @endif
+                                                                    </div>
+
 
                                                                     <div class="col-4">
                                                                         Tanggal Tindakan Camat

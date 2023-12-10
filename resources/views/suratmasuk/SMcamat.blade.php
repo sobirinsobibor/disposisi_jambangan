@@ -52,13 +52,22 @@
                                                     @if ($s->role == 1)
                                                         Sedang diproses Camat
                                                     @elseif ($s->role == 2)
-                                                        Dalam Pengecekan Sekretaris Camat
+                                                        Ditruskan kepada Sekretaris Kecamatan
                                                     @elseif ($s->role == 3)
                                                         Menunggu tindakan Operator
                                                     @elseif ($s->role == 4)
                                                         Surat Masuk tidak disetujui Camat
                                                     @elseif ($s->role == 5)
-                                                        Surat Masuk diterima oleh KASI/KASUBAG
+                                                        Surat Masuk diterima oleh
+                                                        @if ($s->detailsm->count() > 1)
+                                                            @foreach ($s->detailsm as $dsm)
+                                                                {{ $dsm->user->jabatan }} |
+                                                            @endforeach
+                                                        @else
+                                                            @foreach ($s->detailsm as $dsm)
+                                                                {{ $dsm->user->jabatan }}
+                                                            @endforeach
+                                                        @endif
                                                     @endif
                                                 </td>
                                                 <td style="text-align: center;">
@@ -261,7 +270,7 @@
                                                                     <div class="form-group unit" style="display: none;">
                                                                         <label for="">Pilih Unit</label>
                                                                         <select class="select2" style="width: 100%"
-                                                                            multiple="multiple" name="kasi[]">
+                                                                            multiple="multiple" name="kasi[]" >
                                                                             @foreach ($pegawai as $peg)
                                                                                 <option value="{{ $peg->id }}">
                                                                                     {{ $peg->jabatan }}</option>
@@ -272,7 +281,7 @@
 
                                                                     <h5 class="mt-2">Catatan Camat</h5>
                                                                     <div class="form-group with-title mb-3">
-                                                                        <textarea class="form-control" id="exampleFormControlTextarea1" name="catcamat" rows="3"></textarea>
+                                                                        <textarea class="form-control" id="exampleFormControlTextarea1" name="catcamat" rows="8"></textarea>
                                                                         <label>Catatan</label>
                                                                     </div>
                                                                 </div>
@@ -294,7 +303,7 @@
 
                                                 <td style="text-align: center;">
                                                     <a href="{{ asset('storage/' . $s->pdf) }}" target="_blank"><i
-                                                        class="bi bi-file-earmark-medical fs-4"></i></a>
+                                                            class="bi bi-file-earmark-medical fs-4"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -351,9 +360,12 @@
                 if ($(this).val() == "1") {
                     // Jika "Setuju" dipilih, tampilkan elemen "unit"
                     $(".unit").show();
+                    $(".unit select").prop("required", true);
                 } else {
                     // Jika "Tidak Setuju" atau opsi lain dipilih, sembunyikan elemen "unit"
                     $(".unit").hide();
+                    $(".unit select").prop("required", false);
+
                 }
             });
         });

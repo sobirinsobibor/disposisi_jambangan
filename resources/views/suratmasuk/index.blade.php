@@ -20,6 +20,14 @@
                                 Surat Masuk
                             </div>
                             <div class="card-body">
+                                @if (session()->has('success'))
+                                <div class="alert alert-success alert-dismissible show fade">
+                                    {{ session('success') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                                @endif
+    
                                 <table class="table table-striped" id="table1">
                                     <thead>
                                         <tr>
@@ -34,7 +42,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($dsm as $d)
-                                            @if ($d->sm->where('role', 5))
+                                            @if ($d->sm->role == 5)
                                                 <tr>
                                                     <td>{{ $d->sm->nosurat }}</td>
                                                         <td>{{ \Carbon\Carbon::parse($d->sm->tglsurat)->translatedFormat('l, d F Y') }}
@@ -43,16 +51,13 @@
                                                         </td>
                                                         <td>{{ ucwords($d->sm->instansi) }}</td>
                                                         <td>
-                                                            @if ($d->sm->role == 1)
-                                                                Sedang diproses Camat
-                                                            @elseif ($d->sm->role == 2)
-                                                                Dalam Pengecekan Sekretaris Camat
-                                                            @elseif ($d->sm->role == 3)
-                                                                Menunggu tindakan Operator
-                                                            @elseif ($d->sm->role == 4)
-                                                                Surat Masuk tidak disetujui Camat
-                                                            @elseif ($d->sm->role == 5)
-                                                                Surat Masuk diterima oleh KASI/KASUBAG
+                                                            Surat Masuk diterima oleh {{ $d->user->jabatan }}
+                                                            @if($d->read == 1)
+                                                                    <small>
+                                                                        <a style="color: red" href="/smsudahdibaca/{{ $d->id }}">
+                                                                            (tandai sudah dibaca)
+                                                                        </a>
+                                                                    </small> 
                                                             @endif
                                                         </td>
                                                     <td style="text-align: center;">
@@ -90,7 +95,7 @@
                                                                             No. Registrasi
                                                                         </div>
                                                                         <div class="col-8">
-                                                                            {{ $s->noregis }}
+                                                                            {{ $d->sm->noregis }}
                                                                         </div>
                                                                         <div class="col-4">
                                                                             Instansi Pengirim
@@ -211,7 +216,11 @@
                                                         <a href="{{ asset('storage/' . $d->sm->pdf) }}" target="_blank"><i
                                                             class="bi bi-file-earmark-medical fs-4"></i></a>
                                                     </td>
+                                                    
+                                                    
                                                 </tr>
+                                                
+                                                
                                             @endif
                                         @endforeach
                                     </tbody>

@@ -16,9 +16,24 @@ class SuratMasukController extends Controller
 
     public function index()
     {
+        $detailsm = DetailSM::where('kasi', auth()->user()->id)->latest()->get();
+        // foreach($detailsm as $dsm){
+        //     if($dsm->read == 1){
+        //         $validatedData["read"] = 0;
+        //         $dsm->update($validatedData);
+        //     }
+        // }
         return view('suratmasuk.index', [
-            "dsm" => DetailSM::where('kasi', auth()->user()->id)->latest()->get()
+            "dsm" => $detailsm
         ]);
+    }
+
+    public function smsudahdibaca($id_dsm){
+        $detailsm_update = DetailSM::where('id', '=', $id_dsm);
+        $validatedData["read"] = 0;
+        $detailsm_update->update($validatedData);
+        return redirect('/suratmasuk')->with('success', "Surat Masuk Telah Dibaca");
+
     }
 
     public function list()
@@ -124,6 +139,12 @@ class SuratMasukController extends Controller
         $validatedData["role"] = 5;
         $validatedData["tgldisposisi"] = now();
         $suratmasuk->update($validatedData);
+
+        $detailsm = DetailSM::where('suratmasuk', $request->id)->get();
+        foreach($detailsm as $dsm){
+            $validatedData["read"] = 1;
+            $dsm->update($validatedData);
+        }
         return back()->with('success', "Perubahan berhasil disimpan");
     }
 }

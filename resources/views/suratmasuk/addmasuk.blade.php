@@ -121,7 +121,7 @@
                                                             class="form-control form-control-lg" placeholder="--Lampiran--"
                                                             aria-label="Recipient's username"
                                                             aria-describedby="basic-addon2" value="{{ old('lampiran') }}"
-                                                            required>
+                                                            required min="0">
                                                         <span class="input-group-text" id="basic-addon2">Lampiran</span>
                                                     </div>
                                                 </div>
@@ -149,6 +149,7 @@
                                                             <option value="Biasa">Biasa</option>
                                                             <option value="Penting">Penting</option>
                                                             <option value="Sangat Penting">Sangat Penting</option>
+                                                            <option value="Segera">Segera</option>
                                                             <option value="Rahasia">Rahasia</option>
                                                         </select>
                                                     </fieldset>

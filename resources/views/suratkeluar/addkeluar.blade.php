@@ -47,8 +47,8 @@
                                                     <h6>NO INSTANSI</h6>
                                                     <div class="form-group position-relative has-icon-left">
                                                         <input type="text" class="form-control form-control-lg"
-                                                            placeholder="Masukkan No Instansi" name="noinstansi"
-                                                             autofocus required>
+                                                            placeholder="Masukkan No Surat" name="noinstansi"
+                                                           autofocus required>
                                                         <div class="form-control-icon">
                                                             <i class="bi bi-bullseye"></i>
                                                         </div>
@@ -99,7 +99,7 @@
                                                         <input type="number" class="form-control form-control-lg"
                                                             placeholder="--Lampiran--" aria-label="Recipient's username"
                                                             aria-describedby="basic-addon2" name="lampiran"
-                                                            value="{{ old('lampiran') }}" required>
+                                                            value="{{ old('lampiran') }}" required min="0">
                                                         <span class="input-group-text" id="basic-addon2">Lampiran</span>
                                                     </div>
                                                 </div>
@@ -114,6 +114,7 @@
                                                             <option value="Biasa">Biasa</option>
                                                             <option value="Penting">Penting</option>
                                                             <option value="Sangat Penting">Sangat Penting</option>
+                                                            <option value="Segera">Segera</option>
                                                             <option value="Rahasia">Rahasia</option>
                                                         </select>
                                                     </fieldset>

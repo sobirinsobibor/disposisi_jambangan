@@ -44,25 +44,37 @@
                                         @foreach ($sm as $s)
                                             <tr>
                                                 <td>{{ $s->nosurat }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($s->tglsurat)->translatedFormat('l, d F Y') }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($s->tglditerima)->translatedFormat('l, d F Y') }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($s->tglsurat)->translatedFormat('l, d F Y') }}
+                                                </td>
+                                                <td>{{ \Carbon\Carbon::parse($s->tglditerima)->translatedFormat('l, d F Y') }}
+                                                </td>
                                                 <td>{{ ucwords($s->instansi) }}</td>
                                                 <td>
                                                     @if ($s->role == 1)
                                                         Sedang diproses Camat
                                                     @elseif ($s->role == 2)
-                                                        Dalam Pengecekan Sekretaris Camat
+                                                        Diteruskan kepada Sekretaris Kecamatan
                                                     @elseif ($s->role == 3)
                                                         Menunggu tindakan Operator
                                                     @elseif ($s->role == 4)
                                                         Surat Masuk tidak disetujui Camat
                                                     @elseif ($s->role == 5)
-                                                        Surat Masuk telah didisposisikan
+                                                        Surat Masuk diterima oleh
+                                                        @if ($s->detailsm->count() > 1)
+                                                            @foreach ($s->detailsm as $dsm)
+                                                                {{ $dsm->user->jabatan }} |
+                                                            @endforeach
+                                                        @else
+                                                            @foreach ($s->detailsm as $dsm)
+                                                                {{ $dsm->user->jabatan }}
+                                                            @endforeach
+                                                        @endif
                                                     @endif
                                                 </td>
                                                 <td style="text-align: center;">
                                                     <button type="button" class="btn fs-3" style="border: none"
-                                                        data-bs-toggle="modal" data-bs-target="#detailsurat{{ $s->id }}">
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#detailsurat{{ $s->id }}">
                                                         <i class="bi bi-eye"></i>
                                                     </button>
                                                 </td>
@@ -214,9 +226,10 @@
                                                 </div>
 
                                                 <td style="text-align: center;">
-                                                    @if ($s->validasi == 1 && $s->role==3)
+                                                    @if ($s->validasi == 1 && $s->role == 3)
                                                         <button type="button" class="btn btn-outline-primary"
-                                                            data-bs-toggle="modal" data-bs-target="#disposisi{{ $s->id }}">
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#disposisi{{ $s->id }}">
                                                             Tindak Lanjuti
                                                         </button>
                                                     @else
@@ -228,25 +241,29 @@
                                                 <div class="modal fade" id="disposisi{{ $s->id }}" tabindex="-1"
                                                     role="dialog" aria-labelledby="exampleModalScrollableTitle"
                                                     aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable" role="document">
-                                                        <div class="modal-content"  style="height: 250px">
+                                                    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+                                                        role="document">
+                                                        <div class="modal-content" style="height: 250px">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="exampleModalScrollableTitle">
                                                                     Teruskan Surat Masuk Kepada</h5>
-                                                                <button type="button" class="close" data-bs-dismiss="modal"
-                                                                    aria-label="Close">
+                                                                <button type="button" class="close"
+                                                                    data-bs-dismiss="modal" aria-label="Close">
                                                                     <i data-feather="x"></i>
                                                                 </button>
                                                             </div>
                                                             <form action="/disposisisuratmasuk" method="POST">
                                                                 @csrf
-                                                                <input type="hidden" name="id", value="{{ $s->id }}">
+                                                                <input type="hidden" name="id",
+                                                                    value="{{ $s->id }}">
                                                                 <div class="modal-body">
                                                                     <div class="d-flex align-items-ceter">
                                                                         <div class="form-group">
-                                                                            <select class="choices form-select" multiple="multiple" style="width: 100%">
+                                                                            <select class="choices form-select"
+                                                                                multiple="multiple" style="width: 100%">
                                                                                 @foreach ($s->detailsm as $d)
-                                                                                    <option selected>{{ $d->user->jabatan }}</option>
+                                                                                    <option selected>
+                                                                                        {{ $d->user->jabatan }}</option>
                                                                                 @endforeach
                                                                             </select>
                                                                         </div>
@@ -270,7 +287,7 @@
 
                                                 <td style="text-align: center;">
                                                     <a href="{{ asset('storage/' . $s->pdf) }}" target="_blank"><i
-                                                        class="bi bi-file-earmark-medical fs-4"></i></a>
+                                                            class="bi bi-file-earmark-medical fs-4"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach

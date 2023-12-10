@@ -53,18 +53,28 @@
                                                     @if ($s->role == 1)
                                                         Sedang diproses Camat
                                                     @elseif ($s->role == 2)
-                                                        Dalam Pengecekan Sekretaris Camat
+                                                        Diteruskan kepada Sekretaris Kecamatan
                                                     @elseif ($s->role == 3)
                                                         Menunggu tindakan Operator
                                                     @elseif ($s->role == 4)
                                                         Surat Masuk tidak disetujui Camat
                                                     @elseif ($s->role == 5)
-                                                        Surat Masuk diterima oleh KASI/KASUBAG
+                                                        Surat Masuk diterima oleh
+                                                        @if ($s->detailsm->count() > 1)
+                                                            @foreach ($s->detailsm as $dsm)
+                                                                {{ $dsm->user->jabatan }} |
+                                                            @endforeach
+                                                        @else
+                                                            @foreach ($s->detailsm as $dsm)
+                                                                {{ $dsm->user->jabatan }}
+                                                            @endforeach
+                                                        @endif
                                                     @endif
                                                 </td>
                                                 <td style="text-align: center;">
                                                     <button type="button" class="btn fs-3" style="border: none"
-                                                        data-bs-toggle="modal" data-bs-target="#detailsurat{{ $s->id }}">
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#detailsurat{{ $s->id }}">
                                                         <i class="bi bi-eye"></i>
                                                     </button>
                                                 </td>
@@ -227,7 +237,7 @@
 
                                                 <td style="text-align: center;">
                                                     <a href="{{ asset('storage/' . $s->pdf) }}" target="_blank"><i
-                                                        class="bi bi-file-earmark-medical fs-4"></i></a>
+                                                            class="bi bi-file-earmark-medical fs-4"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach

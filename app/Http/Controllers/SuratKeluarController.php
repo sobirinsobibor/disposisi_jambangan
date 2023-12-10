@@ -16,10 +16,19 @@ class SuratKeluarController extends Controller
 
     public function index()
     {
+        $sk = SuratKeluar::where('kasi', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         return view('suratkeluar.index', [
-            "sk" => SuratKeluar::orderBy('created_at', 'desc')->get()
+            "sk" => $sk
         ]);
     }
+
+    public function sksudahdibaca($id_sk){
+        $sk_update = SuratKeluar::where('id', '=', $id_sk);
+        $validatedData["read"] = 0;
+        $sk_update->update($validatedData);
+        return redirect('/suratkeluar')->with('success', "Surat Keluar Telah Dibaca");
+    }
+
 
     public function list()
     {
@@ -104,6 +113,7 @@ class SuratKeluarController extends Controller
             $validatedData["role"] = 4;
         }else{
             $validatedData["role"] = 3;
+            $validatedData["read"] = 1;
         }
         $validatedData["tgldisposisi"] = now();
         $suratkeluar->update($validatedData);
@@ -119,6 +129,7 @@ class SuratKeluarController extends Controller
             $validatedData["role"] = 7;
         }else{
             $validatedData["role"] = 6;
+            $validatedData["read"] = 1;
         }
 
         $suratkeluar->update($validatedData);
@@ -128,7 +139,9 @@ class SuratKeluarController extends Controller
     public function submitnoregis(Request $request){
         $suratkeluar = SuratKeluar::where('id', $request->id)->first();
         $validatedData["nosurat"] = $request->nosurat;
+        $validatedData["noregis"] = $request->count;
         $validatedData["role"] = 5;
+        $validatedData["read"] = 1;
         $suratkeluar->update($validatedData);
         return back()->with('success', "No Surat Keluar berhasil diperbarui");
     }

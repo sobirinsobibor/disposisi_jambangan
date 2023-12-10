@@ -33,6 +33,7 @@ return new class extends Migration
             $table->integer('validasicamat')->nullable();
             $table->date('tglcamat')->nullable();
             $table->mediumText('catcamat')->nullable();
+            $table->integer('read')->default(0);
             $table->timestamps();
         });
     }

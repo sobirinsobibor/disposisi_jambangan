@@ -192,25 +192,28 @@
                                     <span>Persuratan</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     @php
                                         $sm = App\Models\SuratMasuk::where('role', 3)->get();
-                                        $sk = App\Models\SuratKeluar::where('role', 2)->get();
+                                        $sk = App\Models\SuratKeluar::where('role', 2)
+                                            ->orWhere('role', 7)
+                                            ->get();
                                         $count = $sm->count() + $sk->count();
                                     @endphp
                                     @if ($count)
                                         <i style="color: #cc0f0f" class="bi bi-info-circle-fill"></i>
                                     @endif
+
                                 </a>
                                 <ul class="submenu ">
                                     <li class="submenu-item ">
                                         <a href="/datasuratmasuk">Surat Masuk &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <span
-                                                class="badge" style="color: white; background-color: #25396f">{{ $sm->count() }}
+                                            <span class="badge"
+                                                style="color: white; background-color: #25396f">{{ $sm->count() }}
                                             </span>
                                         </a>
                                     </li>
                                     <li class="submenu-item ">
                                         <a href="/datasuratkeluar">Surat Keluar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <span
-                                                class="badge" style="color: white; background-color: #25396f">{{ $sk->count() }}
+                                            <span class="badge"
+                                                style="color: white; background-color: #25396f">{{ $sk->count() }}
                                             </span>
                                         </a>
                                     </li>
@@ -229,14 +232,38 @@
                             <li class="sidebar-item  has-sub">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-envelope"></i>
-                                    <span>Persuratan</span>
+                                    <span>Persuratan</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    @php
+                                        $sumak = App\Models\DetailSM::where('read', 1)
+                                            ->where('kasi', auth()->user()->id)
+                                            ->get();
+                                        $sukel = App\Models\SuratKeluar::where('read', 1)->where('kasi', auth()->user()->id)->get();
+                                    @endphp
+                                    @if ($sumak->count() > 0)
+                                        <i style="color: #15a440" class="bi bi-eye-fill"></i>
+                                    @endif
+                                    @if ($sukel->count() > 0)
+                                        <i style="color: #15a440" class="bi bi-eye-fill"></i>
+                                    @endif
                                 </a>
                                 <ul class="submenu ">
                                     <li class="submenu-item ">
-                                        <a href="/suratmasuk">Surat Masuk</a>
+                                        <a href="/suratmasuk">Surat Masuk &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            @if ($sumak->count() > 0)
+                                                <span class="badge"
+                                                    style="color: white; background-color: #25396f">{{ $sumak->count() }}
+                                                </span>
+                                            @endif
+                                        </a>
                                     </li>
                                     <li class="submenu-item ">
-                                        <a href="/suratkeluar">Surat Keluar</a>
+                                        <a href="/suratkeluar">Surat Keluar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            @if ($sukel->count() > 0)
+                                                <span class="badge"
+                                                    style="color: white; background-color: #25396f">{{ $sukel->count() }}
+                                                </span>
+                                            @endif
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
